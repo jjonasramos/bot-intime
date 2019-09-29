@@ -1,12 +1,12 @@
 import pandas as pd
 from dateutil.relativedelta import *
 import os
-import Configs
+import configs
 
 def main():
     stop_colunas = ['Saldo', 'Pendências', 'Observações', 'Pendências resolvidas', 'Classificação Demanda', ':', 'Consultor', 'Demanda']
 
-    link = Configs.get()['Chronos']
+    link = configs.get()['Chronos']
 
     servicos = pd.read_csv(link, usecols=lambda x: x not in stop_colunas and 'Unnamed' not in x)
     
@@ -27,7 +27,7 @@ def main():
     if not os.path.exists('data'):
         os.makedirs('data', 0o700)
 
-    serv_filter.to_csv('data/servicos.csv', encoding="utf-8")
+    serv_filter.to_csv('data/services.csv', encoding="utf-8")
 
 if __name__ == '__main__':
     main()

@@ -16,7 +16,7 @@ previous_month = format((pd.to_datetime('today').floor('D')).replace(day=1) - re
 # Return {Username, Password, Chronos and Url}
 cfgs = configs.get()
 
-driver = webdriver.Chrome("C:/Users/Jonas Ramos/Documents/Desenvolvimento/Python/chromedriver")
+driver = webdriver.Chrome('drivers/chromedriver')
 driver.get(cfgs['Url'])
 
 # Login
@@ -56,3 +56,11 @@ for serv in services.itertuples():
     driver.find_element_by_id('DataInicio').send_keys(serv.Início)
     driver.find_element_by_id('DataFim').send_keys(serv.Fim)
     driver.find_element_by_id('Descricao').send_keys(serv.Desc)
+
+    driver.find_element_by_id('confirmarEquipeExecutor').click()
+    
+    # Wait load the home page
+    try:
+        entries = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.LINK_TEXT, 'Lançamentos')))
+    except TimeoutException:
+        print('Time to wait the element page exceeded!')
